@@ -23,7 +23,7 @@ var (
 	flagPostDir       = flag.String("postdir", "posts", "posts dir")
 	flagTmplFile      = flag.String("template", "", "template file")
 
-	imgRegexp = regexp.MustCompile(`https://qiita-image-store\.s3\.amazonaws\.com/.+\.png`)
+	imgRegexp = regexp.MustCompile(`https://qiita-image-store\.s3\.amazonaws\.com/.+\.(png|gif)`)
 )
 
 type Tag struct {
