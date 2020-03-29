@@ -26,6 +26,8 @@ var (
 	imgRegexp = regexp.MustCompile(`https://qiita-image-store\.s3\.amazonaws\.com/.+\.png`)
 )
 
+const itemsPerPage = 20
+
 type Tag struct {
 	Name     string   `json:"name"`
 	Versions []string `json:"versions"`
@@ -129,7 +131,7 @@ func main() {
 
 func download100(page int) (hasNext bool, rerr error) {
 
-	url := fmt.Sprintf("https://qiita.com/api/v2/authenticated_user/items?page=%d&per_page=20", page)
+	url := fmt.Sprintf("https://qiita.com/api/v2/authenticated_user/items?page=%d&per_page=%d", page, itemsPerPage)
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
 		return false, err
@@ -187,7 +189,7 @@ func download100(page int) (hasNext bool, rerr error) {
 		return false, err
 	}
 
-	return page < total, nil
+	return itemsPerPage*page < total, nil
 }
 
 func do(req *http.Request) (*http.Response, error) {
